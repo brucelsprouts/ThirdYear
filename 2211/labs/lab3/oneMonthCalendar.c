@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main() {
+int main () {
     int days, startDay;
 
     printf("Enter number of days in month: ");
