@@ -1,77 +1,52 @@
-### Files
+Files
+1. Suppose the command ls were unavailable. What command could you use to view files in the current directory instead? Explain why the command works?
+If the command ls were unavailable, a substitute command you could use to view files in the current directory could be (echo *). This works by expanding into all file names in the current directory.
 
-**1. Suppose the command `ls` were unavailable. What command could you use to view files in the current directory instead? Explain why the command works?**
+2. What option do I need to supply to the rm command to ensure I am prompted before a file or directory is removed? What option do I need to supply to the rm command to ensure I am not prompted before a file or directory is removed? What happens if both options are used simultaneously - which one has precedence?
+To be prompted before a file removal use (rm -i filename), and to ensure you are not prompted use (rm -f filename). If both options were used simultaneously, (-f) takes precedence and no prompt is shown.
 
-You could use the `echo *` command. The `*` is a wildcard character that the shell expands to match all files and directory names in the current directory. The `echo` command then prints this expanded list to the standard output. Another alternative on some systems is `printf '%s\n' *`.
+3. What are some differences between the rename command and the mv command?
+Some of the differences between the rename command and the mv command are that mv is able to rename one file or directory while also moving it, and rename is able to rename multiple files using some expression.
 
-**2. What option do I need to supply to the `rm` command to ensure I am prompted before a file or directory is removed? What option do I need to supply to the `rm` command to ensure I am not prompted before a file or directory is removed? What happens if both options are used simultaneously - which one has precedence?**
+4. The file command, when run against an executable program shows ELF 64-bit LSB executable. What does ELF mean in this context?
+In this context ELF means "Executable and Linkable Format", which is a standard binary format for executables, and shared libraries.
 
-- To be prompted: `rm -i` (interactive)
-- To not be prompted: `rm -f` (force)
-- If both are used (`rm -if` or `rm -fi`), the `-f` option takes precedence, and you will not be prompted. The last option specified on the command line for conflicting behaviors often wins, but in the case of `rm`, force overrides interactive.
+5. Consider the empty file test.txt. Why does ls -l test.txt say the filesize is 0 but du test.txt says the file size is 1?
+Because (ls -l text.txt) displays the size of the data within the file, whereas (du test.txt) shows 1 typically because every file takes up at least 1 filesystem block.
 
-**3. What are some differences between the `rename` command and the `mv` command?**
-
-The `mv` command is simpler; it moves or renames one or more source files to a single destination. If the destination is a directory, it moves the files into it. If it's a filename, it renames the source file. The `rename` command is more powerful for batch renaming. It uses a Perl regular expression to change the names of multiple files at once according to a specified rule. For example, you could change the extension of all `.txt` files to `.bak` with a single `rename` command.
-
-**4. The `file` command, when run against an executable program shows `ELF 64-bit LSB executable`. What does ELF mean in this context?**
-
-ELF stands for **Executable and Linkable Format**. It is a common standard file format for executables, object code, shared libraries, and core dumps. LSB indicates **Least Significant Bit**, which refers to the byte order (little-endian).
-
-**5. Consider the empty file `test.txt`. Why does `ls -l test.txt` say the filesize is 0 but `du test.txt` says the file size is 1?**
-
-`ls -l` shows the actual size of the file's content, which is 0 bytes for an empty file. `du` (disk usage) shows the amount of disk space allocated for the file. File systems allocate space in blocks (e.g., 1KB or 4KB). Even an empty file must have an inode to store its metadata (name, permissions, etc.), and it will be allocated at least one block of disk space, hence `du` reports a non-zero size.
-
-### Directories
-
-**1. Find a better way to do the following:**
-```
+Directories
+Find a better way to do the following
 mkdir grandparent
 mkdir grandparent/parent
 mkdir grandparent/parent/child
-```
-A better way is to use the `-p` (parents) option: `mkdir -p grandparent/parent/child`. This command creates the entire directory tree if it doesn't exist.
+(mkdir -p grandparent/parent/child)
 
-**2. How do you create a directory with a space in it? How do you remove a directory with a space in it?**
+2. How do you create a directory with a space in it? How do you remove a directory with a space in it?
+To create (mkdir "spa ce")
+To remove (rmdir "spa ce")
 
-You must quote the directory name or escape the space.
-- Create: `mkdir "my photos"` or `mkdir my\ photos`
-- Remove: `rmdir "my photos"` or `rmdir my\ photos`
+3. How do I create a directory and set it's permissions to dr-x------ using only the mkdir command?
+(mkdir -m 500 mydir)
 
-**3. How do I create a directory and set its permissions to `dr-x------` using only the `mkdir` command?**
+4. Suppose I was working in /dir1/dir2/dir3 and I cd to /dir4/dir5/dir6. What is an easy way to get back to /dir1/dir2/dir3 without using the explicit command cd /dir1/dir2/dir3 (perhaps I forgot what the full path name was).
+(cd -)
 
-You can use the `-m` (mode) option: `mkdir -m 500 mydir`. The permission `r-x` corresponds to the octal value 5 (4 for read + 1 for execute).
+5. Suppose I used pushd to add 10 folders to my stack. How do I quickly determine which folder is the 6th folder in my stack and how do I quickly cd to it?
+Firstly, view the stack by inputting (dirs -v), then jump to the 6th folder by inputting (pushd +5) to reach index 5 of the stack.
 
-**4. Suppose I was working in `/dir1/dir2/dir3` and I `cd` to `/dir4/dir5/dir6`. What is an easy way to get back to `/dir1/dir2/dir3` without using the explicit command `cd /dir1/dir2/dir3` (perhaps I forgot what the full path name was).**
+Permissions
+What option(s) do I need to add to chmod to print out what modifications are being made?
+(chmod -v 755 file)
 
-You can use the command `cd -`. This command changes the current directory to the previous working directory, which is stored in the `OLDPWD` environment variable.
+2. What option(s) do I need to add to chown to get file2 ownership to simply match file1?
+(chown --reference=file1 file2)
 
-**5. Suppose I used `pushd` to add 10 folders to my stack. How do I quickly determine which folder is the 6th folder in my stack and how do I quickly `cd` to it?**
+3. What option(s) do I need to add to the stat command to display file permission, user ownership, and group ownership only?
+(stat -c "%A %U %G" file)
 
-- To view the stack: `dirs -v`. This will show the directory stack with numeric indices.
-- To go to the 6th folder (assuming the top of the stack is 0): `pushd +5`. The numbers rotate, so `+n` goes to the nth directory from the left of the list shown by `dirs`.
+4. How do you grant a group permission to write data to a file, but prevent the users in that group from moving, removing, or renaming the file?
+(chmod g+w file)	Remove write permission from the directory
+(chmod g-w directory)	Allows group to write inside the file but prevent users in the group from moving, removing, or renaming the file.
 
-### Permissions
-
-**1. What option(s) do I need to add to `chmod` to print out what modifications are being made?**
-
-Use the `-v` (verbose) option: `chmod -v u+x myfile`. This will report the changes made.
-
-**2. What option(s) do I need to add to `chown` to get `file2` ownership to simply match `file1`?**
-
-Use the `--reference` option: `chown --reference=file1 file2`.
-
-**3. What option(s) do I need to add to the `stat` command to display file permission, user ownership, and group ownership only?**
-
-Use the `-c` (format) option with specific format sequences: `stat -c "%A %U %G" filename`.
-- `%A` = Access rights in human-readable form
-- `%U` = User name of owner
-- `%G` = Group name of owner
-
-**4. How do you grant a group permission to write data to a file, but prevent the users in that group from moving, removing, or renaming the file?**
-
-This is controlled by the permissions of the *directory* the file is in, not the file itself. To modify a file's content, a user needs write permission on the file. To rename or delete a file, a user needs write permission on the parent directory. So, you would grant the group write permission on the file (`chmod g+w file`) but ensure they do *not* have write permission on the directory containing the file.
-
-**5. When using `chmod` in symbolic mode, what happens if `u/g/o/a` are omitted. Eg. `chmod +x <filename>`**
-
-If the user/group/owner scope is omitted, the change is applied to all (`a` for all), but it is affected by the `umask`. For example, `chmod +x` will add execute permissions for the user, group, and others, except for the permissions that are set in the `umask`.
+5. When using chmod in symbolic mode, what happens if u/g/o/a are omitted. Eg. chmod +x <filename>
+If u/g/o/a are omitted with the example (chmod +x <filename>) then it defaults to a, giving execute permissions to user, group and others
