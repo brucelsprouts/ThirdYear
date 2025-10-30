@@ -18,13 +18,8 @@ int main() {
     while (fgets(input_buffer, MAX_WORD_LENGTH, stdin) != NULL && input_buffer[0] != '\n') {
         input_buffer[strcspn(input_buffer, "\n")] = 0;
 
-        if (num_words < MAX_WORDS) {
-            strcpy(words[num_words], input_buffer);
-            num_words++;
-        } else {
-            printf("Maximum number of words reached.\n");
-            break;
-        }
+        strcpy(words[num_words], input_buffer);
+        num_words++;
         printf("Enter word: ");
     }
 
@@ -35,7 +30,6 @@ int main() {
 
     char first_word[MAX_WORD_LENGTH];
     char last_word[MAX_WORD_LENGTH];
-
     strcpy(first_word, words[0]);
     strcpy(last_word, words[0]);
 
