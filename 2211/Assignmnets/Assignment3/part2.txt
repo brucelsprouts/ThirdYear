@@ -21,7 +21,7 @@ mkdir grandparent/parent
 mkdir grandparent/parent/child
 (mkdir -p grandparent/parent/child)
 
-2. How do you create a directory with a space in it? How do you remove a directory with a space in it?
+2. How do you create a directory with a spacex in it? How do you remove a directory with a space in it?
 To create (mkdir "spa ce")
 To remove (rmdir "spa ce")
 
