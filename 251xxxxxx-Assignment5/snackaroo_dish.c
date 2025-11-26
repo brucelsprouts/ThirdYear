@@ -6,7 +6,6 @@
 // Helper function to safely read strings
 void read_string(char *buffer, int max_len) {
     if (fgets(buffer, max_len, stdin) != NULL) {
-        // Remove trailing newline character if present
         buffer[strcspn(buffer, "\n")] = 0;
     }
 }
@@ -36,7 +35,6 @@ Dish *insert_dish(Dish *head, int code, const char *name, const char *restaurant
         return head;
     }
 
-    // Check for duplicate code
     if (search_dish(head, code) != NULL) {
         fprintf(stderr, "Error: Dish with code %d already exists.\n", code);
         free(newDish);
@@ -95,7 +93,6 @@ Dish *erase_dish(Dish *head, int code) {
     Dish *current = head;
     Dish *prev = NULL;
 
-    // If head node itself holds the code to be erased
     if (current != NULL && current->code == code) {
         head = current->next;
         free(current);
@@ -103,19 +100,16 @@ Dish *erase_dish(Dish *head, int code) {
         return head;
     }
 
-    // Search for the code to be erased, keep track of the previous node
     while (current != NULL && current->code != code) {
         prev = current;
         current = current->next;
     }
 
-    // If code was not present in linked list
     if (current == NULL) {
         fprintf(stderr, "Error: Dish with code %d not found for erasure.\n", code);
         return head;
     }
 
-    // Unlink the node from the linked list
     prev->next = current->next;
     free(current);
     printf("Dish with code %d erased successfully.\n", code);

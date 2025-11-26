@@ -10,7 +10,7 @@ typedef struct Dish {
     char restaurant[MAX_RESTAURANT_NAME_LEN];
     float rating;
     float price;
-    struct Dish *next; // Pointer to the next dish in the linked list
+    struct Dish *next;
 } Dish;
 
 // Function prototypes for dish management

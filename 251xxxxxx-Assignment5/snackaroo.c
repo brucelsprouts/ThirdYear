@@ -20,8 +20,8 @@ void print_help() {
 char get_command() {
     char command;
     printf("Enter command (h for help): ");
-    scanf(" %c", &command); // Space before %c to consume any leftover newline character
-    while (getchar() != '\n'); // Clear input buffer
+    scanf(" %c", &command);
+    while (getchar() != '\n');
     return command;
 }
 
@@ -280,13 +280,17 @@ void control_drivers() {
 int main() {
     char command;
 
+    printf("**********************\n");
+    printf("* 2211 Snackaroo App *\n");
+    printf("**********************\n\n");
+
     do {
         print_help();
         command = get_command();
 
         switch (command) {
             case 'h':
-                // Help is already printed by print_help()
+                print_help();
                 break;
             case 'q':
                 printf("Quitting Snackaroo. All data will be lost.\n");
