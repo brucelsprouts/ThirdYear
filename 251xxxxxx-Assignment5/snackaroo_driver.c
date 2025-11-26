@@ -168,7 +168,7 @@ void print_all_drivers(const Driver *head) {
     }
     printf("%-10s %-30s %-15s %-15s\n", "Code", "Name", "Vehicle Color", "License Plate");
     printf("-----------------------------------------------------------------------\n");
-    Driver *current = head;
+    const Driver *current = head;
     while (current != NULL) {
         printf("%-10d %-30s %-15s %-15s\n",
                current->code, current->name, get_vehicle_color_string(current->vehicle_color), current->license_plate);

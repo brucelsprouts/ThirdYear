@@ -193,7 +193,7 @@ void control_drivers() {
                 }
 
                 printf("Enter driver name (up to %d characters): ", MAX_DRIVER_NAME_LEN - 1);
-                read_string_driver(name, MAX_DRIVER_NAME_LEN);
+                read_string(name, MAX_DRIVER_NAME_LEN);
 
                 printf("Enter vehicle color (0=red, 1=green, 2=blue, 3=grey, 4=white, 5=black, 6=other): ");
                 scanf("%d", &color_int);
@@ -205,7 +205,7 @@ void control_drivers() {
                 vehicle_color = (VehicleColor)color_int;
 
                 printf("Enter license plate (2-8 alphanumeric characters or spaces): ");
-                read_string_driver(license_plate, MAX_LICENSE_PLATE_LEN);
+                read_string(license_plate, MAX_LICENSE_PLATE_LEN);
                 if (!is_valid_license_plate(license_plate)) {
                     printf("Error: Invalid license plate format.\n");
                     break;
@@ -234,7 +234,7 @@ void control_drivers() {
                 }
 
                 printf("Enter new driver name (up to %d characters): ", MAX_DRIVER_NAME_LEN - 1);
-                read_string_driver(name, MAX_DRIVER_NAME_LEN);
+                read_string(name, MAX_DRIVER_NAME_LEN);
 
                 printf("Enter new vehicle color (0=red, 1=green, 2=blue, 3=grey, 4=white, 5=black, 6=other): ");
                 scanf("%d", &color_int);
@@ -246,7 +246,7 @@ void control_drivers() {
                 vehicle_color = (VehicleColor)color_int;
 
                 printf("Enter new license plate (2-8 alphanumeric characters or spaces): ");
-                read_string_driver(license_plate, MAX_LICENSE_PLATE_LEN);
+                read_string(license_plate, MAX_LICENSE_PLATE_LEN);
                 if (!is_valid_license_plate(license_plate)) {
                     printf("Error: Invalid license plate format.\n");
                     break;

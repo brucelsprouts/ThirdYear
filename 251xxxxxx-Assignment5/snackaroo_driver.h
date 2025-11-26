@@ -13,6 +13,8 @@ typedef struct Driver {
 } Driver;
 
 // Function prototypes for driver management
+int is_valid_license_plate(const char *plate); // Helper for license plate validation
+const char* get_vehicle_color_string(VehicleColor color); // Helper to get string from enum
 Driver *create_driver(int code, const char *name, VehicleColor color, const char *license_plate);
 Driver *insert_driver(Driver *head, int code, const char *name, VehicleColor color, const char *license_plate);
 Driver *search_driver(Driver *head, int code);

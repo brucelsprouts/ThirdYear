@@ -25,6 +25,7 @@ typedef enum {
 // Function prototypes for main menu
 void print_help();
 char get_command();
+void read_string(char *buffer, int max_len); // Global helper for reading strings
 void control_dishes();
 void control_drivers();
 

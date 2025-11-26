@@ -143,7 +143,7 @@ void print_all_dishes(const Dish *head) {
     }
     printf("%-10s %-30s %-30s %-10s %-10s\n", "Code", "Name", "Restaurant", "Rating", "Price");
     printf("----------------------------------------------------------------------------------\n");
-    Dish *current = head;
+    const Dish *current = head;
     while (current != NULL) {
         printf("%-10d %-30s %-30s %-10.1f %-10.2f\n",
                current->code, current->name, current->restaurant, current->rating, current->price);
