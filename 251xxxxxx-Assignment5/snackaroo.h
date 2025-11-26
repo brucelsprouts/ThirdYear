@@ -9,7 +9,7 @@
 #define MAX_DISH_NAME_LEN 100
 #define MAX_RESTAURANT_NAME_LEN 100
 #define MAX_DRIVER_NAME_LEN 50
-#define MAX_LICENSE_PLATE_LEN 9
+#define MAX_LICENSE_PLATE_LEN 9 // 2-8 alphanumeric + 1 for null terminator
 
 // Driver vehicle colors
 typedef enum {
@@ -25,7 +25,7 @@ typedef enum {
 // Function prototypes for main menu
 void print_help();
 char get_command();
-void read_string(char *buffer, int max_len);
+void read_string(char *buffer, int max_len); // Global helper for reading strings
 void control_dishes();
 void control_drivers();
 

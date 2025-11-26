@@ -8,23 +8,20 @@ Driver *driver_head = NULL;
 
 // Function to print help messages
 void print_help() {
-    printf("\n--- Snackaroo Program Help ---\n");
-    printf("This program allows you to manage a database of food dishes and delivery drivers.\n");
-    printf("You can perform various operations such as adding, searching, updating, and deleting records.\n\n");
-    printf("Available Commands:\n");
-    printf("  h: Display this help message.\n");
-    printf("  q: Quit the program (all unsaved data will be lost).\n");
-    printf("  m: Enter the Dish Control Menu to manage food dishes.\n");
-    printf("  a: Enter the Driver Control Menu to manage delivery drivers.\n");
-    printf("------------------------------\n");
+    printf("\n--- Snackaroo Menu ---\n");
+    printf("h: Print help\n");
+    printf("q: Quit the program\n");
+    printf("m: Control dishes\n");
+    printf("a: Control drivers\n");
+    printf("----------------------\n");
 }
 
 // Function to get a command from the user
 char get_command() {
     char command;
     printf("Enter command (h for help): ");
-    scanf(" %c", &command);
-    while (getchar() != '\n');
+    scanf(" %c", &command); // Space before %c to consume any leftover newline character
+    while (getchar() != '\n'); // Clear input buffer
     return command;
 }
 
@@ -289,7 +286,7 @@ int main() {
 
         switch (command) {
             case 'h':
-                print_help();
+                // Help is already printed by print_help()
                 break;
             case 'q':
                 printf("Quitting Snackaroo. All data will be lost.\n");
