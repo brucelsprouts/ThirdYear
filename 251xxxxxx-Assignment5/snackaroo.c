@@ -6,26 +6,38 @@
 Dish *dish_head = NULL;
 Driver *driver_head = NULL;
 
-// Function to print help messages
-void print_help() {
-    printf("\n--- Snackaroo Menu ---\n");
-    printf("h: Print help\n");
-    printf("q: Quit the program\n");
-    printf("m: Control dishes\n");
-    printf("a: Control drivers\n");
-    printf("----------------------\n");
+void print_detailed_help() {
+    printf("************************************\n");
+    printf("* Welcome to the 2211 Snackaroo App *\n");
+    printf("************************************\n\n");
+    printf("This program allows you to manage dishes and drivers for a snack delivery service.\n");
+    printf("You can perform various operations like inserting, searching, updating, and erasing dishes and drivers.\n\n");
+    printf("--- Main Menu Commands ---\n");
+    printf("  h: Display this comprehensive help message\n");
+    printf("  q: Quit the program (Warning: all unsaved data will be lost)\n");
+    printf("  m: Access the 'Dish Control Menu' for dish management\n");
+    printf("  a: Access the 'Driver Control Menu' for driver management\n");
+    printf("------------------------------------\n\n");
+}
+
+void print_main_menu() {
+    printf("--- Main Menu ---\n");
+    printf("  h: Help\n");
+    printf("  q: Quit\n");
+    printf("  m: Dishes\n");
+    printf("  a: Drivers\n");
+    printf("-----------------\n\n");
 }
 
 // Function to get a command from the user
 char get_command() {
     char command;
-    printf("Enter command (h for help): ");
+    printf("\tEnter command: ");
     scanf(" %c", &command);
     while (getchar() != '\n');
     return command;
 }
 
-// Function to control dishes
 void control_dishes() {
     char command;
     int code;
@@ -35,22 +47,22 @@ void control_dishes() {
     Dish *found_dish;
 
     printf("\n--- Dish Control Menu ---\n");
-    printf("i: Insert a new dish\n");
-    printf("s: Search for a dish\n");
-    printf("u: Update a dish\n");
-    printf("e: Erase a dish\n");
-    printf("p: Print all dishes\n");
-    printf("b: Back to main menu\n");
-    printf("-------------------------\n");
+    printf("  i: Insert a new dish\n");
+    printf("  s: Search for a dish by code\n");
+    printf("  u: Update an existing dish by code\n");
+    printf("  e: Erase a dish by code\n");
+    printf("  p: Print all dishes currently in the system\n");
+    printf("  b: Return to the main menu\n");
+    printf("-------------------------\n\n");
 
     while (1) {
-        printf("Enter dish command: ");
+        printf("\tEnter dish command: ");
         scanf(" %c", &command);
         while (getchar() != '\n');
 
         switch (command) {
-            case 'i': // Insert a new dish
-                printf("Enter dish code: ");
+            case 'i':
+                printf("\tEnter dish code: ");
                 scanf("%d", &code);
                 while (getchar() != '\n');
 
@@ -63,13 +75,13 @@ void control_dishes() {
                     break;
                 }
 
-                printf("Enter dish name (up to %d characters): ", MAX_DISH_NAME_LEN - 1);
+                printf("\tEnter dish name (up to %d characters): ", MAX_DISH_NAME_LEN - 1);
                 read_string(name, MAX_DISH_NAME_LEN);
 
-                printf("Enter restaurant name (up to %d characters): ", MAX_RESTAURANT_NAME_LEN - 1);
+                printf("\tEnter restaurant name (up to %d characters): ", MAX_RESTAURANT_NAME_LEN - 1);
                 read_string(restaurant, MAX_RESTAURANT_NAME_LEN);
 
-                printf("Enter dish rating (0.0-10.0, one decimal): ");
+                printf("\tEnter dish rating (0.0-10.0, one decimal): ");
                 scanf("%f", &rating);
                 while (getchar() != '\n');
                 if (rating < 0.0 || rating > 10.0) {
@@ -77,7 +89,7 @@ void control_dishes() {
                     break;
                 }
 
-                printf("Enter dish price (positive float, two decimals): ");
+                printf("\tEnter dish price (positive float, two decimals): ");
                 scanf("%f", &price);
                 while (getchar() != '\n');
                 if (price <= 0.0) {
@@ -89,16 +101,16 @@ void control_dishes() {
                 printf("Dish inserted successfully.\n");
                 break;
 
-            case 's': // Search for a dish
-                printf("Enter dish code to search: ");
+            case 's':
+                printf("\tEnter dish code to search: ");
                 scanf("%d", &code);
                 while (getchar() != '\n');
                 found_dish = search_dish(dish_head, code);
                 print_dish(found_dish);
                 break;
 
-            case 'u': // Update a dish
-                printf("Enter dish code to update: ");
+            case 'u':
+                printf("\tEnter dish code to update: ");
                 scanf("%d", &code);
                 while (getchar() != '\n');
                 found_dish = search_dish(dish_head, code);
@@ -107,13 +119,13 @@ void control_dishes() {
                     break;
                 }
 
-                printf("Enter new dish name (up to %d characters): ", MAX_DISH_NAME_LEN - 1);
+                printf("\tEnter new dish name (up to %d characters): ", MAX_DISH_NAME_LEN - 1);
                 read_string(name, MAX_DISH_NAME_LEN);
 
-                printf("Enter new restaurant name (up to %d characters): ", MAX_RESTAURANT_NAME_LEN - 1);
+                printf("\tEnter new restaurant name (up to %d characters): ", MAX_RESTAURANT_NAME_LEN - 1);
                 read_string(restaurant, MAX_RESTAURANT_NAME_LEN);
 
-                printf("Enter new dish rating (0.0-10.0, one decimal): ");
+                printf("\tEnter new dish rating (0.0-10.0, one decimal): ");
                 scanf("%f", &rating);
                 while (getchar() != '\n');
                 if (rating < 0.0 || rating > 10.0) {
@@ -121,7 +133,7 @@ void control_dishes() {
                     break;
                 }
 
-                printf("Enter new dish price (positive float, two decimals): ");
+                printf("\tEnter new dish price (positive float, two decimals): ");
                 scanf("%f", &price);
                 while (getchar() != '\n');
                 if (price <= 0.0) {
@@ -133,18 +145,18 @@ void control_dishes() {
                 printf("Dish updated successfully.\n");
                 break;
 
-            case 'e': // Erase a dish
-                printf("Enter dish code to erase: ");
+            case 'e':
+                printf("\tEnter dish code to erase: ");
                 scanf("%d", &code);
                 while (getchar() != '\n');
                 dish_head = erase_dish(dish_head, code);
                 break;
 
-            case 'p': // Print all dishes
+            case 'p':
                 print_all_dishes(dish_head);
                 break;
 
-            case 'b': // Back to main menu
+            case 'b':
                 return;
 
             default:
@@ -154,7 +166,6 @@ void control_dishes() {
     }
 }
 
-// Function to control drivers
 void control_drivers() {
     char command;
     int code, color_int;
@@ -164,22 +175,22 @@ void control_drivers() {
     VehicleColor vehicle_color;
 
     printf("\n--- Driver Control Menu ---\n");
-    printf("i: Insert a new driver\n");
-    printf("s: Search for a driver\n");
-    printf("u: Update a driver\n");
-    printf("e: Erase a driver\n");
-    printf("p: Print all drivers\n");
-    printf("b: Back to main menu\n");
-    printf("---------------------------\n");
+    printf("  i: Insert a new driver\n");
+    printf("  s: Search for a driver by code\n");
+    printf("  u: Update an existing driver by code\n");
+    printf("  e: Erase a driver by code\n");
+    printf("  p: Print all drivers currently in the system\n");
+    printf("  b: Return to the main menu\n");
+    printf("---------------------------\n\n");
 
     while (1) {
-        printf("Enter driver command: ");
+        printf("\tEnter driver command: ");
         scanf(" %c", &command);
         while (getchar() != '\n');
 
         switch (command) {
-            case 'i': // Insert a new driver
-                printf("Enter driver code: ");
+            case 'i':
+                printf("\tEnter driver code: ");
                 scanf("%d", &code);
                 while (getchar() != '\n');
 
@@ -192,10 +203,10 @@ void control_drivers() {
                     break;
                 }
 
-                printf("Enter driver name (up to %d characters): ", MAX_DRIVER_NAME_LEN - 1);
+                printf("\tEnter driver name (up to %d characters): ", MAX_DRIVER_NAME_LEN - 1);
                 read_string(name, MAX_DRIVER_NAME_LEN);
 
-                printf("Enter vehicle color (0=red, 1=green, 2=blue, 3=grey, 4=white, 5=black, 6=other): ");
+                printf("\tEnter vehicle color (0=red, 1=green, 2=blue, 3=grey, 4=white, 5=black, 6=other): ");
                 scanf("%d", &color_int);
                 while (getchar() != '\n');
                 if (color_int < 0 || color_int > 6) {
@@ -204,7 +215,7 @@ void control_drivers() {
                 }
                 vehicle_color = (VehicleColor)color_int;
 
-                printf("Enter license plate (2-8 alphanumeric characters or spaces): ");
+                printf("\tEnter license plate (2-8 alphanumeric characters or spaces): ");
                 read_string(license_plate, MAX_LICENSE_PLATE_LEN);
                 if (!is_valid_license_plate(license_plate)) {
                     printf("Error: Invalid license plate format.\n");
@@ -215,16 +226,16 @@ void control_drivers() {
                 printf("Driver inserted successfully.\n");
                 break;
 
-            case 's': // Search for a driver
-                printf("Enter driver code to search: ");
+            case 's':
+                printf("\tEnter driver code to search: ");
                 scanf("%d", &code);
                 while (getchar() != '\n');
                 found_driver = search_driver(driver_head, code);
                 print_driver(found_driver);
                 break;
 
-            case 'u': // Update a driver
-                printf("Enter driver code to update: ");
+            case 'u':
+                printf("\tEnter driver code to update: ");
                 scanf("%d", &code);
                 while (getchar() != '\n');
                 found_driver = search_driver(driver_head, code);
@@ -233,10 +244,10 @@ void control_drivers() {
                     break;
                 }
 
-                printf("Enter new driver name (up to %d characters): ", MAX_DRIVER_NAME_LEN - 1);
+                printf("\tEnter new driver name (up to %d characters): ", MAX_DRIVER_NAME_LEN - 1);
                 read_string(name, MAX_DRIVER_NAME_LEN);
 
-                printf("Enter new vehicle color (0=red, 1=green, 2=blue, 3=grey, 4=white, 5=black, 6=other): ");
+                printf("\tEnter new vehicle color (0=red, 1=green, 2=blue, 3=grey, 4=white, 5=black, 6=other): ");
                 scanf("%d", &color_int);
                 while (getchar() != '\n');
                 if (color_int < 0 || color_int > 6) {
@@ -245,7 +256,7 @@ void control_drivers() {
                 }
                 vehicle_color = (VehicleColor)color_int;
 
-                printf("Enter new license plate (2-8 alphanumeric characters or spaces): ");
+                printf("\tEnter new license plate (2-8 alphanumeric characters or spaces): ");
                 read_string(license_plate, MAX_LICENSE_PLATE_LEN);
                 if (!is_valid_license_plate(license_plate)) {
                     printf("Error: Invalid license plate format.\n");
@@ -256,8 +267,8 @@ void control_drivers() {
                 printf("Driver updated successfully.\n");
                 break;
 
-            case 'e': // Erase a driver
-                printf("Enter driver code to erase: ");
+            case 'e':
+                printf("\tEnter driver code to erase: ");
                 scanf("%d", &code);
                 while (getchar() != '\n');
                 driver_head = erase_driver(driver_head, code);
@@ -285,15 +296,15 @@ int main() {
     printf("**********************\n\n");
 
     do {
-        print_help();
+        print_main_menu();
         command = get_command();
 
         switch (command) {
             case 'h':
-                print_help();
+                print_detailed_help();
                 break;
             case 'q':
-                printf("Quitting Snackaroo. All data will be lost.\n");
+                printf("Quitting Snackaroo. All data will be lost.\n\n");
                 break;
             case 'm':
                 control_dishes();
@@ -302,7 +313,7 @@ int main() {
                 control_drivers();
                 break;
             default:
-                printf("Invalid command. Please try again.\n");
+                printf("Invalid command. Please enter 'h' for help.\n\n");
                 break;
         }
     } while (command != 'q');
