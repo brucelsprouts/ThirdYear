@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+// Checks if a given number is prime.
 int is_prime(int num) {
     if (num <= 1) return 0;
     if (num <= 3) return 1;
@@ -13,6 +14,7 @@ int is_prime(int num) {
     return 1;
 }
 
+// Calculates and prints prime numbers within a specified range.
 void calculate_primes_in_range(int min_range, int max_range, int parent_pid, int original_max) {
     int count = 0;
     long long sum = 0;
@@ -32,7 +34,9 @@ void calculate_primes_in_range(int min_range, int max_range, int parent_pid, int
            getpid(), parent_pid, min_range, display_upper_bound, count, sum);
 }
 
+// Main function
 int main(int argc, char *argv[]) {
+    // Argument validation.
     if (argc != 4) {
         fprintf(stderr, "Usage: %s <0_serial_1_parallel> <min> <max>\n", argv[0]);
         return 1;
@@ -42,11 +46,11 @@ int main(int argc, char *argv[]) {
     int min = atoi(argv[2]);
     int max = atoi(argv[3]);
 
-    if (min == 0 && argv[2][0] != '0') {
+    if (min == 0 && argv[2][0] != '0') { // Check for non-integer min
         fprintf(stderr, "Error: Minimum value must be an integer.\n");
         return 1;
     }
-    if (max == 0 && argv[3][0] != '0') {
+    if (max == 0 && argv[3][0] != '0') { // Check for non-integer max
         fprintf(stderr, "Error: Maximum value must be an integer.\n");
         return 1;
     }
@@ -57,6 +61,7 @@ int main(int argc, char *argv[]) {
     
     printf("Process id: %d\n", getpid());
 
+    // Divide range into quartiles.
     int ranges[4][2];
     int range_size = (max - min + 1) / 4;
     
@@ -64,13 +69,14 @@ int main(int argc, char *argv[]) {
         ranges[i][0] = min + i * range_size;
         ranges[i][1] = min + (i + 1) * range_size - 1;
     }
-    ranges[3][1] = max;
+    ranges[3][1] = max; // Ensure the last range goes up to max
 
-    if (mode == 0) {
+    // Handle serial and parallel execution.
+    if (mode == 0) { // Serial mode
         for (int i = 0; i < 4; i++) {
             calculate_primes_in_range(ranges[i][0], ranges[i][1], getppid(), max);
         }
-    } else {
+    } else { // Parallel mode
         pid_t pids[4];
         for (int i = 0; i < 4; i++) {
             pids[i] = fork();
@@ -78,12 +84,13 @@ int main(int argc, char *argv[]) {
             if (pids[i] < 0) {
                 perror("fork failed");
                 return 1;
-            } else if (pids[i] == 0) {
+            } else if (pids[i] == 0) { // Child process
                 calculate_primes_in_range(ranges[i][0], ranges[i][1], getppid(), max);
-                exit(0);
+                exit(0); // Child exits after calculation
             }           
         }
 
+        // Parent waits for child processes.
         for (int i = 0; i < 4; i++) {
             wait(NULL);
         }
